@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .clear-btn {
+            background-color: #6c757d;
+        }
+        .clear-btn:hover {
+            background-color: #545b62;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            min-height: 50px;
+            word-wrap: break-word;
+        }
+        .loading {
+            color: #007bff;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .debug {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Emotion Detection Application</h1>
+        <div class="form-group">
+            <label for="textInput">Enter text to analyze:</label>
+            <textarea 
+                id="textInput" 
+                placeholder="Type your text here to analyze emotions... (e.g., 'I am happy today!')"
+                rows="5"
+            ></textarea>
+        </div>
+        <button onclick="analyzeEmotion()">Analyze Emotion</button>
+        <button class="clear-btn" onclick="clearInput()">Clear</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("✅ JavaScript loaded successfully");
+            console.log("✅ DOM content loaded");
+        });
+
+        function analyzeEmotion() {
+            console.log("🔄 Analyze button clicked");
+            
+            var textInput = document.getElementById('textInput');
+            var resultDiv = document.getElementById('result');
+            var text = textInput.value.trim();
+            
+            console.log("📝 Input text:", text);
+            console.log("📏 Text length:", text.length);
+            
+            if (!text) {
+                resultDiv.innerHTML = '<div class="error">Please enter some text to analyze.</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="loading">Analyzing emotion...</div>';
+            
+            var url = '/emotionDetector?textToAnalyze=' + encodeURIComponent(text);
+            console.log("🌐 Request URL:", url);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            
+            xhr.onreadystatechange = function() {
+                console.log("📡 XHR State:", xhr.readyState, "Status:", xhr.status);
+                
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var result = xhr.responseText;
+                        console.log("✅ Response received:", result);
+                        
+                        if (result.includes('Invalid text') || result.includes('Error')) {
+                            resultDiv.innerHTML = '<div class="error">' + result + '</div>';
+                        } else {
+                            resultDiv.innerHTML = '<div class="success">' + result + '</div>';
+                        }
+                    } else {
+                        console.log("❌ HTTP Error:", xhr.status);
+                        resultDiv.innerHTML = '<div class="error">Server error (Status: ' + xhr.status + '). Please try again.</div>';
+                    }
+                }
+            };
+            
+            xhr.onerror = function() {
+                console.error("❌ Network error");
+                resultDiv.innerHTML = '<div class="error">Network error. Please check your connection and try again.</div>';
+            };
+            
+            xhr.ontimeout = function() {
+                console.error("❌ Request timeout");
+                resultDiv.innerHTML = '<div class="error">Request timeout. Please try again.</div>';
+            };
+            
+            xhr.timeout = 30000; // 30 seconds
+            xhr.send();
+        }
+        
+        function clearInput() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('result').innerHTML = '';
+            console.log("🧹 Input cleared");
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('textInput').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    analyzeEmotion();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
