@@ -1,6 +1,10 @@
 # Emotion Detection Application
 
-A web-based emotion detection application built with Flask that analyzes text and identifies emotions using Watson NLU API with a local fallback system.
+<div align="center">
+  <img width="85%" alt="Emotion Detection Project Screenshot" src="https://github.com/user-attachments/assets/68f9c917-5eff-4c66-af95-f6c0590fe501" />
+</div>
+
+A web based emotion detection application built with Flask that analyzes text and identifies emotions using Watson NLU API with a local fallback system.
 
 ## Features
 
@@ -77,11 +81,6 @@ For the given statement, the system response is 'anger': 0.123456, 'disgust': 0.
 - **Parameter:** `textToAnalyze` (string)
 - **Returns:** Formatted emotion analysis result
 
-### Example API Call
-```bash
-curl "http://127.0.0.1:5000/emotionDetector?textToAnalyze=I%20am%20happy"
-```
-
 ## Technology Stack
 
 - **Backend:** Flask (Python)
@@ -92,36 +91,16 @@ curl "http://127.0.0.1:5000/emotionDetector?textToAnalyze=I%20am%20happy"
 ## How It Works
 
 1. **Primary Method:** Uses Watson Natural Language Understanding API for emotion analysis
-2. **Fallback Method:** When Watson API is unavailable, uses a local keyword-based emotion detection system
+2. **Fallback Method:** When Watson API is unavailable, uses a local keyword based emotion detection system
 3. **Emotion Scoring:** Returns confidence scores for all five emotions
 4. **Dominant Emotion:** Identifies the emotion with the highest confidence score
-
-## Development
-
-### Adding New Features
-- Modify `emotion_detection.py` for new emotion analysis logic
-- Update `templates/index.html` for UI changes
-- Extend `server.py` for new endpoints
-
-### Testing
-```bash
-python test_emotion_detection.py
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
 - Watson Natural Language Understanding API for emotion analysis
 - Flask framework for web application development
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
