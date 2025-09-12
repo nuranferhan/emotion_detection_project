@@ -1,4 +1,4 @@
-# Emotion Detection Application
+# Emotion Detection Application 
 
 <div align="center">
   <img width="85%" alt="Emotion Detection Project Screenshot" src="https://github.com/user-attachments/assets/68f9c917-5eff-4c66-af95-f6c0590fe501" />
@@ -8,7 +8,7 @@ A web based emotion detection application built with Flask that analyzes text an
 
 ## Features
 
-- **Real-time emotion analysis** from text input
+- **Real time emotion analysis** from text input
 - **Watson NLU API integration** for accurate emotion detection
 - **Local fallback system** when API is unavailable
 - **Clean, responsive web interface**
